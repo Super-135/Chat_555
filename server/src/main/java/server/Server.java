@@ -11,14 +11,22 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class Server {
     private List<ClientHandler> clients;
     private AuthService authService;
+    private ExecutorService executorService;
+
+    public ExecutorService getExecutorService() {
+        return executorService;
+    }
 
     public Server() {
         clients = new Vector<>();
+        executorService = Executors.newCachedThreadPool();
 
         if (!SQLClientHandler.connect()){
             throw new RuntimeException("Не удалось подключится к БД");
@@ -45,6 +53,7 @@ public class Server {
             e.printStackTrace();
         } finally {
             SQLClientHandler.disconnect();
+            executorService.shutdown();
             try {
                 server.close();
                 System.out.println("Отключили DB");

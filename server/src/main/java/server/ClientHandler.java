@@ -30,7 +30,7 @@ public class ClientHandler {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
-            new Thread(() -> {
+            server.getExecutorService().execute(() -> {
                 try {
                     //цикл аутентификации
                     // если пользователь зависнет на этапе подключения или регистрации
@@ -145,7 +145,12 @@ public class ClientHandler {
                         e.printStackTrace();
                     }
                 }
-            }).start();
+            });
+
+//            new Thread(() -> {
+//
+//                }
+//            }).start();
 
 
         } catch (IOException e) {
