@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class ClientHandler {
     private Server server;
@@ -21,6 +22,8 @@ public class ClientHandler {
     private String prvNick = "";
     private String prvMsg = "";
     private boolean loginEnabled = false;
+
+    private static final Logger LOGGER = Logger.getLogger(ClientHandler.class.getName());
 
      public ClientHandler(Server server, Socket socket) {
         this.server = server;

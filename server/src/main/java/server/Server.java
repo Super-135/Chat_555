@@ -13,12 +13,14 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 
 public class Server {
     private List<ClientHandler> clients;
     private AuthService authService;
     private ExecutorService executorService;
+    private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
 
     public ExecutorService getExecutorService() {
         return executorService;
@@ -40,17 +42,21 @@ public class Server {
 
         try {
             server = new ServerSocket(PORT);
-            System.out.println("Сервер запущен!");
+//            System.out.println("Сервер запущен!");
+            LOGGER.info("Сервер запущен!");
+
 
 
             while (true) {
                 socket = server.accept();
-                System.out.println("Клиент подключился ");
+//                System.out.println("Клиент подключился");
+                LOGGER.info("Клиент подключился");
                 new ClientHandler(this, socket);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.warning("ОШИБКА");
         } finally {
             SQLClientHandler.disconnect();
             executorService.shutdown();

@@ -24,6 +24,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class Controller implements Initializable {
     //    @FXML
@@ -57,6 +58,7 @@ public class Controller implements Initializable {
     private boolean authenticated;
     private String nick;
     private String login;
+    private static final Logger LOGGER = Logger.getLogger(Controller.class.getName());
 
 //    static class  Cell extends ListCell<String> {
 //
@@ -180,6 +182,7 @@ public class Controller implements Initializable {
                         } else {
                             Platform.runLater(() -> {
                                 chatLog.getItems().add(str + "\n");
+                                LOGGER.info(str);
                             });
                             LocalHistory.writeMsg(str);
                         }
